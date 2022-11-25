@@ -19,7 +19,7 @@ const getAllLikes = async (req, res) => {
 
 //create Like
 const createLike = async (req, res) => {
-    const { id: likeId } = req.body;
+    const { id: likeId } = req.params;
 
     const like = await Like.create({
         itemLiked: likeId,
@@ -27,7 +27,7 @@ const createLike = async (req, res) => {
     });
 
     res.status(StatusCodes.CREATED).json({
-        msg: `Pending List Added`,
+        msg: `Added to List`,
         like,
     });
 };

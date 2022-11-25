@@ -52,6 +52,8 @@ const getSingleItem = async (req, res) => {
 
     res.status(StatusCodes.OK).json({ item });
 };
+
+//create iten
 const createItem = async (req, res) => {
     const { itemName, description, location } = req.body;
     const item = await Item.create({

@@ -4,6 +4,8 @@ const {
     UnauthenticatedError,
     NotFoundError,
 } = require("../errors");
+
+//require Need Schema
 const Need = require("../models/Need");
 
 //get all needs
@@ -12,6 +14,7 @@ const getAllNeeds = async (req, res) => {
         path: "user",
         select: "username",
     });
+    
     res.status(StatusCodes.OK).json({ need, needCount: need.length });
 };
 
