@@ -1,5 +1,7 @@
+//require stream to read buffer objects
 const { Readable } = require("stream");
 const path = require("path");
+//require sharp to minize image size 
 const sharp = require("sharp");
 const { StatusCodes } = require("http-status-codes");
 const Item = require("../models/Item");
@@ -8,6 +10,8 @@ const {
     UnauthenticatedError,
     NotFoundError,
 } = require("../errors");
+
+//require cloudinary version 2
 const cloudinary = require("cloudinary").v2;
 
 //create a function that invokes buffer reading for sharp stream package
@@ -26,10 +30,7 @@ const getAllItems = async (req, res) => {
     const items = await Item.find({});
     res.status(StatusCodes.OK)
         .json({ items, itemCount: items.length })
-        .populate({
-            path: "user",
-            select: "username",
-        });
+
 };
 
 //get uers items
@@ -38,10 +39,13 @@ const getUserItems = async (req, res) => {
     res.status(StatusCodes.OK).json({ items, itemCount: items.length });
 };
 
-//get single item
+//get single 
 const getSingleItem = async (req, res) => {
     const { id: itemId } = req.params;
-    const item = await Item.find({ _id: itemId });
+    const item = await Item.find({ _id: itemId }).populate({
+        path: "user",
+        select: "username",
+    });
     if (!item) {
         throw new NotFoundError(`item with id ${itemId} not found`);
     }
@@ -135,6 +139,8 @@ const insertPhoto = async (req, res) => {
     res.json({ ImageURL: uri.secure_url });
 };
 
+
+//export modules
 module.exports = {
     createItem,
     updateItem,

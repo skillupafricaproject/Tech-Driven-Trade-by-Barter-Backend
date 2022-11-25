@@ -39,8 +39,9 @@ const register = async (req, res) => {
 
 //verify user
 const verifyEmail = async (req, res) => {
-    const { verificationToken, username } = req.body;
-    const user = await User.findOne({ username });
+    const { id } = req.params;
+    const { verificationToken } = req.body;
+    const user = await User.findOne({ _id: id });
 
     if (!user) {
         throw new UnauthenticatedError("Verification Failed");
@@ -159,6 +160,7 @@ const resetPassword = async (req, res) => {
     res.send("reset password");
 };
 
+//export modules
 module.exports = {
     register,
     login,
