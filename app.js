@@ -13,11 +13,6 @@ const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
 
-// Swagger
-const swaggerUI = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./swagger.yaml');
-
 //require cloudinary version 2
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
@@ -25,6 +20,12 @@ cloudinary.config({
     api_key: process.env.CLOUD_API_KEY,
     api_secret: process.env.CLOUD_API_SECRET,
 });
+
+// Swagger
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./swagger.yaml')
+
 
 const connectDB = require("./db/connect");
 app.use(fileUpload({ useTempFiles: true }));
@@ -42,11 +43,11 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //use extra security packages
 app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
-  })
-  );    
+    rateLimiter({
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        max: 100, // limit each IP to 100 requests per windowMs
+    })
+);
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
@@ -54,7 +55,7 @@ app.use(xss());
 
 
 app.get('/', (req, res) => {
-    res.send('<h1>We Barter API</h1><a href="/api-docs">Documentation</a>');
+   res.send('WE BARTER API')
 });
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
