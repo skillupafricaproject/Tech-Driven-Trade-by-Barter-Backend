@@ -1,6 +1,9 @@
 require("dotenv").config();
 require("express-async-errors");
 
+const express = require("express");
+const app = express();
+
 const fileUpload = require("express-fileupload");
 
 // extra security packages
@@ -9,8 +12,10 @@ const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
 
-const express = require("express");
-const app = express();
+// Swagger
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
 
 //require cloudinary version 2
 const cloudinary = require("cloudinary").v2;
@@ -33,6 +38,7 @@ const userRouter = require("./routes/user");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
+//use extra security packages
 app.use(
   rateLimiter({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -43,9 +49,16 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
-
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
+
+app.get('/', (req, res) => {
+    res.send('<h1>We Barter API</h1><a href="/api-docs">Documentation</a>');
+});
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+
+
 
 // routes
 app.use("/api/v1/auth", authRouter);
