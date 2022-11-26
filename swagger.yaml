@@ -1,0 +1,605 @@
+openapi: 3.0.0
+info:
+  title: WE BARTER API
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://tech-driven-trade-by-barter-backend.onrender.com/api/v1
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisterRequest'
+              - example:
+                  username: jacob
+                  phonenumber: '08087345427'
+                  email: jacob@gmail.com
+                  password: secret
+            example:
+              username: jacob
+              phonenumber: '08087345427'
+              email: jacob@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/verify-email/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    post:
+      tags:
+      - Auth
+      summary: Verify Email
+      operationId: VerifyEmail
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/VerifyEmailRequest'
+              - example:
+                  verificationToken: c1d5
+            example:
+              verificationToken: c1d5
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  username: festus
+                  password: secret
+            example:
+              username: festus
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/logout:
+    delete:
+      tags:
+      - Auth
+      summary: Logout
+      operationId: Logout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/forgot-password:
+    post:
+      tags:
+      - Auth
+      summary: Forgot Password
+      operationId: ForgotPassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/ForgotPasswordRequest'
+              - example:
+                  email: godlovesesther1@gmail.com
+            example:
+              email: godlovesesther1@gmail.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/reset-password:
+    post:
+      tags:
+      - Auth
+      summary: resetPassword
+      operationId: resetPassword
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/resetPasswordRequest'
+              - example:
+                  email: esther1@gmail.com
+                  token: 1211bc39
+                  password: secret1
+            example:
+              email: esther1@gmail.com
+              token: 1211bc39
+              password: secret1
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /item/createitem:
+    post:
+      tags:
+      - Item
+      summary: Create Item
+      operationId: CreateItem
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreateItemRequest'
+              - example:
+                  itemName: Blue Jean
+                  location: Iyana Ipaja, Lagos
+                  description: Fairly used
+            example:
+              itemName: Blue Jean
+              location: Iyana Ipaja, Lagos
+              description: Fairly used
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /item/updateItem/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    patch:
+      tags:
+      - Item
+      summary: Update Item
+      operationId: UpdateItem
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateItemRequest'
+              - example:
+                  itemName: Pro M1 Apple Laptop 2022
+                  description: Nigeria used
+            example:
+              itemName: Pro M1 Apple Laptop 2022
+              description: Nigeria used
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /item/insertPhoto/photo/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    patch:
+      tags:
+      - Item
+      summary: Insert Photo
+      operationId: InsertPhoto
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            encoding: {}
+            schema:
+              required:
+              - image
+              type: object
+              properties:
+                image:
+                  type: string
+        required: false
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /item/getAllItems:
+    get:
+      tags:
+      - Item
+      summary: Get All Items
+      operationId: GetAllItems
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /item/getUserItems:
+    get:
+      tags:
+      - Item
+      summary: Get User Items
+      operationId: GetUserItems
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /item/delteItem/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    delete:
+      tags:
+      - Item
+      summary: Delete Item
+      operationId: DeleteItem
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /need/createNeed/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    post:
+      tags:
+      - Need
+      summary: Create Need
+      operationId: CreateNeed
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreateNeedRequest'
+              - example:
+                  needName: Iphone 12 Max c7
+                  description: London used, in perfect condition
+            example:
+              needName: Iphone 12 Max c7
+              description: London used, in perfect condition
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /need/deleteNeed/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    delete:
+      tags:
+      - Need
+      summary: Delete Need
+      operationId: DeleteNeed
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /need/getAllNeeds:
+    get:
+      tags:
+      - Need
+      summary: Get All Needs
+      operationId: GetAllNeeds
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /need/getNeed:
+    get:
+      tags:
+      - Need
+      summary: Get Need
+      operationId: GetNeed
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /like/createLike:
+    post:
+      tags:
+      - Like
+      summary: Create Like
+      operationId: CreateLike
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreateLikeRequest'
+              - example:
+                  id: 6373df62d10a2d4cb8dc2dfa
+            example:
+              id: 6373df62d10a2d4cb8dc2dfa
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /like/deleteLike/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
+    delete:
+      tags:
+      - Like
+      summary: Delete Like
+      operationId: DeleteLike
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /like/getAllLikes:
+    get:
+      tags:
+      - Like
+      summary: Get Likes
+      operationId: GetLikes
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /user/getUserProfile:
+    get:
+      tags:
+      - Profile
+      summary: User Profile
+      operationId: UserProfile
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+      - username
+      - phonenumber
+      - email
+      - password
+      type: object
+      properties:
+        username:
+          type: string
+        phonenumber:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        username: jacob
+        phonenumber: '08087345427'
+        email: jacob@gmail.com
+        password: secret
+    VerifyEmailRequest:
+      title: VerifyEmailRequest
+      required:
+      - verificationToken
+      type: object
+      properties:
+        verificationToken:
+          type: string
+      example:
+        verificationToken: c1d5
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - username
+      - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: festus
+        password: secret
+    LogoutRequest:
+      title: LogoutRequest
+      required:
+      - username
+      - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: joke
+        password: secret
+    ForgotPasswordRequest:
+      title: ForgotPasswordRequest
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: godlovesesther1@gmail.com
+    resetPasswordRequest:
+      title: resetPasswordRequest
+      required:
+      - email
+      - token
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        token:
+          type: string
+        password:
+          type: string
+      example:
+        email: esther1@gmail.com
+        token: 1211bc39
+        password: secret1
+    CreateItemRequest:
+      title: CreateItemRequest
+      required:
+      - itemName
+      - location
+      - description
+      type: object
+      properties:
+        itemName:
+          type: string
+        location:
+          type: string
+        description:
+          type: string
+      example:
+        itemName: Blue Jean
+        location: Iyana Ipaja, Lagos
+        description: Fairly used
+    UpdateItemRequest:
+      title: UpdateItemRequest
+      required:
+      - itemName
+      - description
+      type: object
+      properties:
+        itemName:
+          type: string
+        description:
+          type: string
+      example:
+        itemName: Pro M1 Apple Laptop 2022
+        description: Nigeria used
+    CreateNeedRequest:
+      title: CreateNeedRequest
+      required:
+      - needName
+      - description
+      type: object
+      properties:
+        needName:
+          type: string
+        description:
+          type: string
+      example:
+        needName: Iphone 12 Max c7
+        description: London used, in perfect condition
+    CreateLikeRequest:
+      title: CreateLikeRequest
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+      example:
+        id: 6373df62d10a2d4cb8dc2dfa
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
+tags:
+- name: Auth
+- name: Item
+- name: Need
+- name: Like
+- name: Profile

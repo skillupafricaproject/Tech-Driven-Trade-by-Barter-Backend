@@ -53,7 +53,7 @@ const getSingleItem = async (req, res) => {
     res.status(StatusCodes.OK).json({ item });
 };
 
-//create iten
+//create item
 const createItem = async (req, res) => {
     const { itemName, description, location } = req.body;
     const item = await Item.create({
@@ -111,6 +111,7 @@ const insertPhoto = async (req, res) => {
         const data = await sharp(req.files.image.tempFilePath)
             .webp({ quality: 20 })
             .toBuffer();
+            //use clodinary as a promise using the uploadStream method
         return new Promise((resolve, reject) => {
             const stream = cloudinary.uploader.upload_stream(
                 { folder: "DEV" },
