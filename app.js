@@ -6,6 +6,7 @@ const app = express();
 
 const fileUpload = require("express-fileupload");
 
+
 // extra security packages
 const helmet = require('helmet');
 const cors = require('cors');
@@ -26,6 +27,7 @@ cloudinary.config({
 });
 
 const connectDB = require("./db/connect");
+app.use(fileUpload({ useTempFiles: true }));
 
 // routers
 const authRouter = require("./routes/auth");
@@ -44,21 +46,17 @@ app.use(
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
   })
-);
+  );    
 app.use(express.json());
-app.use(helmet());
 app.use(cors());
+app.use(helmet());
 app.use(xss());
-app.use(express.json());
-app.use(fileUpload({ useTempFiles: true }));
+
 
 app.get('/', (req, res) => {
     res.send('<h1>We Barter API</h1><a href="/api-docs">Documentation</a>');
 });
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
-
-
 
 // routes
 app.use("/api/v1/auth", authRouter);
