@@ -283,7 +283,7 @@ paths:
           headers: {}
       deprecated: false
       security: []
-  /item/getSingleItems/63750d8d0bd5cc2d689e8040:
+  /item/getSingleItems/{id}:
     get:
       tags:
       - Item
@@ -295,7 +295,6 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-      security: []
   /item/delteItem/{id}:
     parameters:
       - in: path
