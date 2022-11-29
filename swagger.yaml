@@ -283,19 +283,20 @@ paths:
           headers: {}
       deprecated: false
       security: []
-  /item/getSingleItems/{id}:
+  /item/getSingleItem/{id}:
     get:
       tags:
       - Item
-      summary: Get Single Items
-      operationId: GetSingleItems
+      summary: Get Single Item
+      operationId: GetSingleItem
       parameters: []
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /item/delteItem/{id}:
+      security: []
+  /item/deleteItem/{id}:
     parameters:
       - in: path
         name: id
