@@ -18,7 +18,7 @@ const ItemSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: "User",
         },
-        userLike: [
+        isFavorite: [
             {
                 type: Boolean,
                 default: false,
