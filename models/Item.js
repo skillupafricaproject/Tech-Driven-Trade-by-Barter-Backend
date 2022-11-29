@@ -20,8 +20,8 @@ const ItemSchema = new mongoose.Schema(
         },
         userLike: [
             {
-                type: mongoose.Types.ObjectId,
-                ref: "User",
+                type: Boolean,
+                default: false,
             },
         ],
     },
