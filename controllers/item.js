@@ -33,7 +33,7 @@ const getAllItems = async (req, res) => {
 
 };
 
-//get uers items
+//get users items
 const getUserItems = async (req, res) => {
     const items = await Item.find({ user: req.user.userId }).sort("createdAt");
     res.status(StatusCodes.OK).json({ items, itemCount: items.length });

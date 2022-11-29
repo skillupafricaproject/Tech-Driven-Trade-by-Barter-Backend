@@ -21,19 +21,20 @@ const register = async (req, res) => {
         phonenumber,
         password,
         verificationToken,
-    });
-    //send mail
-    mailTransport().sendMail({
-        from: "noreply@gmail.com",
-        to: email,
-        subject: "verify you email account",
-        html: `<h4> Hello, ${username}, kindly verify your account with this token: ${verificationToken}</h4>`,
-    });
+    }).select("-password")
+
+    //send Mail
+    mailTransport.sendMail({
+        from: '"We Barter" <weBarter@gmail.com>', // sender address
+        to: email, // list of receivers
+        subject: "verify you email account", // Subject line
+        // text: "Trying from the server with env keys", // plain text body
+        html: `<h4> Hello, ${username}, kindly verify your account with this token: ${verificationToken}</h4>`,// html body
+    })
 
     res.status(StatusCodes.CREATED).json({
         msg: "Success! Please check your email to verify account",
         user: user,
-        token: verificationToken,
     });
 };
 
@@ -113,10 +114,10 @@ const forgotPassword = async (req, res) => {
 
     if (user) {
         const passwordToken = crypto.randomBytes(2).toString("hex");
-        console.log(passwordToken);
-        // // send email
-        mailTransport().sendMail({
-            from: "noreply@gmail.com",
+       
+        // send email
+        mailTransport.sendMail({
+            from: `"We Barter" <weBarter@gmail.com>`,
             to: email,
             subject: "Reset you account",
             html: `<h4>Hi, kindly reset your password with this token: ${passwordToken}</h4>`,
@@ -157,7 +158,7 @@ const resetPassword = async (req, res) => {
         }
     }
 
-    res.send("reset password");
+    res.status(StatusCodes.OK).json({ msg: "Password reset successful" });
 };
 
 //export modules
