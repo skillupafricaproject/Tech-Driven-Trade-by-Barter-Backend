@@ -16,7 +16,7 @@ const mailTransport = nodemailer.createTransport({
     port: 465,
     secure: true, // use TLS
     auth: {
-        user: 'codewithemmy@gmail.com',
+        user: process.env.SMS_USER,
         pass: process.env.SMS_PASS,
     },
     tls: {
