@@ -295,6 +295,7 @@ paths:
           description: ''
           headers: {}
       deprecated: false
+      security: []
   /item/delteItem/{id}:
     parameters:
       - in: path
