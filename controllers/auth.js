@@ -21,7 +21,7 @@ const register = async (req, res) => {
         phonenumber,
         password,
         verificationToken,
-    }).select("-password")
+    });
 
     //send Mail
     mailTransport.sendMail({
@@ -33,8 +33,7 @@ const register = async (req, res) => {
     })
 
     res.status(StatusCodes.CREATED).json({
-        msg: "Success! Please check your email to verify account",
-        user: user,
+        msg: "Success! Please check your email to verify account", user: user.username, email: user.email
     });
 };
 
@@ -114,7 +113,7 @@ const forgotPassword = async (req, res) => {
 
     if (user) {
         const passwordToken = crypto.randomBytes(2).toString("hex");
-       
+
         // send email
         mailTransport.sendMail({
             from: `"We Barter" <weBarter@gmail.com>`,
@@ -157,7 +156,6 @@ const resetPassword = async (req, res) => {
             await user.save();
         }
     }
-
     res.status(StatusCodes.OK).json({ msg: "Password reset successful" });
 };
 
