@@ -18,12 +18,11 @@ const ItemSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: "User",
         },
-        isFavorite: [
-            {
-                type: Boolean,
-                default: false,
-            },
-        ],
+        isFavorite:
+        {
+            type: Boolean,
+            default: false,
+        },
     },
     { timestamps: true }
 );
