@@ -284,6 +284,13 @@ paths:
       deprecated: false
       security: []
   /item/getSingleItem/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID
     get:
       tags:
       - Item
