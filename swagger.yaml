@@ -283,6 +283,18 @@ paths:
           headers: {}
       deprecated: false
       security: []
+  /item/getSingleItems/63750d8d0bd5cc2d689e8040:
+    get:
+      tags:
+      - Item
+      summary: Get Single Items
+      operationId: GetSingleItems
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
   /item/delteItem/{id}:
     parameters:
       - in: path
