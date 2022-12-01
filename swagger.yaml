@@ -398,25 +398,20 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /like/createLike:
+  /like/createLike/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The item ID
     post:
       tags:
       - Like
       summary: Create Like
       operationId: CreateLike
       parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/CreateLikeRequest'
-              - example:
-                  id: 6373df62d10a2d4cb8dc2dfa
-            example:
-              id: 6373df62d10a2d4cb8dc2dfa
-        required: true
       responses:
         '200':
           description: ''
