@@ -58,6 +58,14 @@ const verifyEmail = async (req, res) => {
 
   await user.save();
 
+  //send Mail
+  mailTransport.sendMail({
+    from: '"We Barter" <weBarter@gmail.com>', // sender address
+    to: email, // list of receivers
+    subject: "MAIL IS VERIFIED", // Subject line
+    html: `<h4> Hello, ${user.username}</h4> <h2>Congrats</h2> you are now verified`, // html body
+  });
+
   res.status(StatusCodes.OK).json({ msg: "Email Verified" });
 };
 
