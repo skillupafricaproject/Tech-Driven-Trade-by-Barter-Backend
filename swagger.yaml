@@ -60,8 +60,10 @@ paths:
               allOf:
               - $ref: '#/components/schemas/VerifyEmailRequest'
               - example:
+                  email: 'example@gmail.com'
                   verificationToken: c1d5
             example:
+              email: 'example@gmail.com'
               verificationToken: c1d5
         required: true
       responses:

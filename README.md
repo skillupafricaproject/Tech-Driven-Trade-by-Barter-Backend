@@ -14,7 +14,7 @@ npm install && npm start
 Swagger UI
 
 ```yaml
-/jobs/{id}:
+/auth/{id}:
   parameters:
     - in: path
       name: id

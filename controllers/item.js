@@ -39,7 +39,7 @@ const getUserItems = async (req, res) => {
     res.status(StatusCodes.OK).json({ items, itemCount: items.length });
 };
 
-//get single 
+//get single item
 const getSingleItem = async (req, res) => {
     const { id: itemId } = req.params;
     const item = await Item.find({ _id: itemId }).populate({

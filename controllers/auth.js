@@ -27,7 +27,7 @@ const register = async (req, res) => {
   mailTransport.sendMail({
     from: '"We Barter" <weBarter@gmail.com>', // sender address
     to: email, // list of receivers
-    subject: "verify you email account", // Subject line
+    subject: "VERIFY YOUR EMAIL ACCOUNT", // Subject line
     html: `<h4> Hello, ${username}, kindly verify your account with this token: ${verificationToken}</h4>`, // html body
   });
 
@@ -41,8 +41,8 @@ const register = async (req, res) => {
 
 //verify user
 const verifyEmail = async (req, res) => {
-  const { id } = req.params;
-  const { verificationToken } = req.body;
+  const { id, } = req.params;
+  const { email, verificationToken } = req.body;
   const user = await User.findOne({ _id: id });
 
   if (!user) {
@@ -55,7 +55,7 @@ const verifyEmail = async (req, res) => {
 
   (user.isVerified = true), (user.verified = Date.now());
   user.verificationToken = "";
-
+ 
   await user.save();
 
   //send Mail
