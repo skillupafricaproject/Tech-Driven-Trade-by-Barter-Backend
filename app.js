@@ -53,11 +53,7 @@ app.use(helmet());
 app.use(xss());
 
 
-app.get('/', (req, res) => {
-    res.send('<h1>We Barter API</h1><a href="/api-docs">Documentation</a>');
-});
-
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // routes
 app.use("/api/v1/auth", authRouter);
