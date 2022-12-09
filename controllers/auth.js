@@ -1,6 +1,10 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
-const { BadRequestError, UnauthenticatedError } = require("../errors");
+const {
+  BadRequestError,
+  UnauthenticatedError,
+  NotFoundError,
+} = require("../errors");
 const crypto = require("crypto");
 const createHash = require("../utils/createHash");
 const { mailTransport } = require("../utils/sendEmail");
@@ -35,27 +39,27 @@ const register = async (req, res) => {
     msg: "Success! Please check your email to verify account",
     user: user.username,
     email: user.email,
-    userId: user._id
+    userId: user._id,
   });
 };
 
 //verify user
 const verifyEmail = async (req, res) => {
-  const { id, } = req.params;
+  const { id } = req.params;
   const { verificationToken } = req.body;
   const user = await User.findOne({ _id: id });
 
   if (!user) {
-    throw new UnauthenticatedError("Verification Failed");
+    throw new NotFoundError("User not found");
   }
 
   if (user.verificationToken !== verificationToken) {
-    throw new UnauthenticatedError("Verification Failed");
+    throw new BadRequestError("Verification Failed");
   }
 
   (user.isVerified = true), (user.verified = Date.now());
   user.verificationToken = "";
- 
+
   await user.save();
 
   //send Mail
