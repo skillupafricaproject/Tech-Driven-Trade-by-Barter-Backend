@@ -83,12 +83,12 @@ const login = async (req, res) => {
   const user = await User.findOne({ username });
 
   if (!user) {
-    throw new BadRequestError(`Invalid Credentials`);
+    throw new BadRequestError(`Invalid username or password`);
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    throw new BadRequestError(`Invalid Credentials`);
+    throw new BadRequestError(`Invalid username or password`);
   }
 
   if (!user.isVerified) {
@@ -104,7 +104,7 @@ const login = async (req, res) => {
     expires: new Date(Date.now() + oneDay),
   });
 
-  res.status(StatusCodes.OK).json({ msg: "Login Successful", token: token });
+  res.status(StatusCodes.OK).json({ msg: "Login Successful", userId: user._id, token: token });
 };
 
 //user logout
