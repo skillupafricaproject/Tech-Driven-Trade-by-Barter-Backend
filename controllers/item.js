@@ -1,6 +1,7 @@
 //require stream to read buffer objects
 const { Readable } = require("stream");
 const path = require("path");
+const fs = require("fs");
 //require sharp to minize image size
 const sharp = require("sharp");
 const { StatusCodes } = require("http-status-codes");
@@ -85,6 +86,8 @@ const createItem = async (req, res) => {
     photos: uri.secure_url,
     user: req.user.userId,
   });
+
+  // const insertPhoto = await Item.insertMany({ photos: uri.secure_url });
   res.status(StatusCodes.CREATED).json(item);
 };
 

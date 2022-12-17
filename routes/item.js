@@ -5,13 +5,13 @@ const router = express.Router();
 const authMiddleware = require("../middleware/authentication");
 
 const {
-    createItem,
-    updateItem,
-    getAllItems,
-    getUserItems,
-    deleteItem,
-    insertPhoto,
-    getSingleItem,
+  createItem,
+  updateItem,
+  getAllItems,
+  getUserItems,
+  deleteItem,
+  insertPhoto,
+  getSingleItem,
 } = require("../controllers/item");
 
 router.route("/createItem").post(authMiddleware, createItem);
