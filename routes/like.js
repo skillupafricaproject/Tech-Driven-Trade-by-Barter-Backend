@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const authMiddleware = require("../middleware/authentication");
+const middleAuth = require("../middleware/middleAuth");
 
 // const likeMiddleware = require("../middleware/likeMiddleware");
 

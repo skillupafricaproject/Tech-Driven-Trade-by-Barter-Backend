@@ -17,20 +17,51 @@ const getAllLikes = async (req, res) => {
   res.status(StatusCodes.OK).json({ like, likeCount: like.length });
 };
 
-//create Like
+// //create Like
+// const createLike = async (req, res) => {
+//   const { id: likeId } = req.params;
+
+//   const like = await Like.create({
+//     itemLiked: likeId,
+//     isFavorite: true,
+//     user: req.user.userId,
+//   });
+
+//   res.status(StatusCodes.CREATED).json({
+//     msg: `Added to List`,
+//     like,
+//   });
+// };
+
 const createLike = async (req, res) => {
   const { id: likeId } = req.params;
 
-  const like = await Like.create({
-    itemLiked: likeId,
-    isFavorite: true,
-    user: req.user.userId,
-  });
+  const userExist = await Like.findOne({ user: req.user.userId });
 
-  res.status(StatusCodes.CREATED).json({
-    msg: `Added to List`,
-    like,
-  });
+  if (userExist) {
+    const like = await Like.findOneAndUpdate(
+      { user: req.user.userId },
+      { $push: { itemLiked: likeId } },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(StatusCodes.CREATED).json({
+      msg: `Added to List`,
+      like,
+    });
+  } else {
+    const like = await Like.create({
+      itemLiked: likeId,
+      isFavorite: true,
+      user: req.user.userId,
+    });
+    res.status(StatusCodes.CREATED).json({
+      msg: `Added to List`,
+      like,
+    });
+  }
 };
 
 //delete likes

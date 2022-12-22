@@ -10,7 +10,8 @@ const Like = require("../models/Like");
 const {
   BadRequestError,
   UnauthenticatedError,
-  NotFoundError,zz
+  NotFoundError,
+  zz,
 } = require("../errors");
 
 //require cloudinary version 2
@@ -29,29 +30,23 @@ const bufferToStream = (buffer) => {
 
 //get all items
 const getAllItems = async (req, res) => {
-  const findUserLike = await Like.findOne({ user: req.user.userId });
-  const items = await Item.find({});
-  console.log(findUserLike.isFavorite);
-  // for (let i = 0; i < items.length; i++) {
-  //   if (findUserLike.itemLiked.includes(items[i]._id)) {
-  //     items[i].isFavorite = true;
-  //   } else {
-  //     items[i].isFavorite = false;
-  //   }
-  //   // console.log(findUserLike.itemLiked.includes(items[i]._id));
-  // }
-  // items.forEach((itemId) => {
-  //   const idForItem = itemId._id;
-  //   if (idForItem === findUserLike.itemLiked) {
-  //     itemId.isFavorite = true;
-  //     itemId.save();
-  //   } else {
-  //     itemId.isFavorite = false;
-  //     itemId.save();
-  //   }
-  // });
-
-  res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+  console.log(req?.user?.userId)
+  if (req?.user?.userId === undefined) {
+    const items = await Item.find({});
+    res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+  } else {
+    const findUserLike = await Like.findOne({ user: req.user.userId });
+    const items = await Item.find({});
+    console.log(findUserLike.itemLiked);
+    for (let i = 0; i < items.length; i++) {
+      if (findUserLike.itemLiked.includes(items[i]._id)) {
+        items[i].isFavorite = true;
+      } else {
+        items[i].isFavorite = false;
+      }
+    }
+    res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+  }
 };
 
 //get users items
