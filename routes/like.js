@@ -4,6 +4,8 @@ const router = express.Router();
 
 const authMiddleware = require("../middleware/authentication");
 
+// const likeMiddleware = require("../middleware/likeMiddleware");
+
 const { createLike, getAllLikes, deleteLike } = require("../controllers/like");
 
 router.route("/createLike/:id").post(authMiddleware, createLike);
