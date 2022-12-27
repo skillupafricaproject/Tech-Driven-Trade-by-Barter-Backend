@@ -30,14 +30,13 @@ const bufferToStream = (buffer) => {
 
 //get all items
 const getAllItems = async (req, res) => {
-  console.log(req?.user?.userId)
+  console.log(req?.user?.userId);
   if (req?.user?.userId === undefined) {
     const items = await Item.find({});
     res.status(StatusCodes.OK).json({ items, itemCount: items.length });
   } else {
     const findUserLike = await Like.findOne({ user: req.user.userId });
     const items = await Item.find({});
-    console.log(findUserLike.itemLiked);
     for (let i = 0; i < items.length; i++) {
       if (findUserLike.itemLiked.includes(items[i]._id)) {
         items[i].isFavorite = true;
