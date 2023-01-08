@@ -11,7 +11,6 @@ const {
   BadRequestError,
   UnauthenticatedError,
   NotFoundError,
-  zz,
 } = require("../errors");
 
 //require cloudinary version 2
@@ -33,7 +32,7 @@ const getAllItems = async (req, res) => {
   console.log(req?.user?.userId);
   if (req?.user?.userId === undefined) {
     const items = await Item.find({});
-    res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+    return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
   } else {
     const findUserLike = await Like.findOne({ user: req.user.userId });
     const items = await Item.find({});
@@ -44,14 +43,14 @@ const getAllItems = async (req, res) => {
         items[i].isFavorite = false;
       }
     }
-    res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+    return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
   }
 };
 
 //get users items
 const getUserItems = async (req, res) => {
   const items = await Item.find({ user: req.user.userId }).sort("createdAt");
-  res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+  return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
 };
 
 //get single item
@@ -70,11 +69,12 @@ const getSingleItem = async (req, res) => {
 
 //create item
 const createItem = async (req, res) => {
+  const image = req.files.image;
   const { itemName, description, location } = req.body;
 
   //create function that uses async/await while return promise with cloudinary & sharp package
   const convert_url = async (req) => {
-    const data = await sharp(req.files.image.tempFilePath)
+    const data = await sharp(image.tempFilePath)
       .webp({ quality: 20 })
       .toBuffer();
     //use clodinary as a promise using the uploadStream method
@@ -94,6 +94,7 @@ const createItem = async (req, res) => {
   };
 
   const uri = await convert_url(req);
+  fs.unlinkSync(req.files.image.tempFilePath);
 
   const item = await Item.create({
     itemName,
@@ -104,7 +105,7 @@ const createItem = async (req, res) => {
   });
 
   // const insertPhoto = await Item.insertMany({ photos: uri.secure_url });
-  res.status(StatusCodes.CREATED).json(item);
+  return res.status(StatusCodes.CREATED).json(item);
 };
 
 //update item
@@ -121,7 +122,7 @@ const updateItem = async (req, res) => {
     runvalidators: true,
   });
 
-  res.status(StatusCodes.OK).json({ item });
+  return res.status(StatusCodes.OK).json({ item });
 };
 
 //delete item
@@ -181,7 +182,7 @@ const insertPhoto = async (req, res) => {
     }
   );
 
-  res.json({ ImageURL: uri.secure_url });
+  return res.json({ ImageURL: uri.secure_url });
 };
 
 //export modules
