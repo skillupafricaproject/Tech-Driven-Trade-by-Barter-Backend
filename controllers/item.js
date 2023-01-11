@@ -35,21 +35,18 @@ const allItems = async (req, res) => {
 //get all items
 const getAllItems = async (req, res) => {
   console.log(req?.user?.userId);
-  if (req?.user?.userId === undefined) {
-    const items = await Item.find({});
-    return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
-  } else {
-    const findUserLike = await Like.findOne({ user: req.user.userId });
-    const items = await Item.find({});
-    for (let i = 0; i < items.length; i++) {
-      if (findUserLike.itemLiked.includes(items[i]._id)) {
-        items[i].isFavorite = true;
-      } else {
-        items[i].isFavorite = false;
-      }
+  // const items = await Item.find({});
+  // return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+  const findUserLike = await Like.findOne({ user: req.user.userId });
+  const items = await Item.find({});
+  for (let i = 0; i < items.length; i++) {
+    if (findUserLike.itemLiked.includes(items[i]._id)) {
+      items[i].isFavorite = true;
+    } else {
+      items[i].isFavorite = false;
     }
-    return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
   }
+  return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
 };
 
 //get users items
