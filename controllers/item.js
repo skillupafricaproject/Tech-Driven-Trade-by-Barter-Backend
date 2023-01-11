@@ -28,15 +28,6 @@ const bufferToStream = (buffer) => {
 };
 //get all items1
 const allItems = async (req, res) => {
-  const items = await Item.find({});
-  return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
-};
-
-//get all items
-const getAllItems = async (req, res) => {
-  console.log(req?.user?.userId);
-  // const items = await Item.find({});
-  // return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
   const findUserLike = await Like.findOne({ user: req.user.userId });
   const items = await Item.find({});
   for (let i = 0; i < items.length; i++) {
@@ -46,6 +37,12 @@ const getAllItems = async (req, res) => {
       items[i].isFavorite = false;
     }
   }
+  return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+};
+
+//get all items
+const getAllItems = async (req, res) => {
+  const items = await Item.find({});
   return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
 };
 
