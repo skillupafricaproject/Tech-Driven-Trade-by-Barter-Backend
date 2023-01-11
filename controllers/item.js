@@ -26,6 +26,11 @@ const bufferToStream = (buffer) => {
   });
   return readable;
 };
+//get all items1
+const allItems = async (req, res) => {
+  const items = await Item.find({});
+  return res.status(StatusCodes.OK).json({ items, itemCount: items.length });
+};
 
 //get all items
 const getAllItems = async (req, res) => {
@@ -194,4 +199,5 @@ module.exports = {
   deleteItem,
   insertPhoto,
   getSingleItem,
+  allItems,
 };

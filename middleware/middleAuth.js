@@ -7,7 +7,6 @@ const middleAuth = async (req, res, next) => {
     next();
   }
   const token = authHeader.split(" ")[1];
-  // console.log(token);
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
